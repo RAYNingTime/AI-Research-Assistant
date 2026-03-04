@@ -10,7 +10,7 @@ the latest developments in Artificial Intelligence.
 
 | Feature | Details |
 |---|---|
-| **LLM** | xAI Grok 4 (`grok-4-0709`) with fast reasoning (`reasoning_effort: low`) |
+| **LLM** | xAI Grok 4 (`grok-4-fast-reasoning`) via OpenAI-compatible API |
 | **Scraping** | `trafilatura` + `httpx` — state-of-the-art boilerplate removal, no manual selectors |
 | **Token saving** | Content pre-truncated before the LLM ever sees it (`MAX_CHARS_PER_PAGE`) |
 | **Memory** | Persistent JSON store of all previous daily summaries; injected as context |
@@ -152,10 +152,7 @@ PERSONA: str = "You are a senior ML researcher specialising in LLMs and AI safet
    `MAX_CHARS_PER_PAGE` characters *before* reaching the LLM.
 2. **Selective memory** — only the *n* most-recent summaries are included as
    context (not the full history).
-3. **Fast reasoning mode** — `reasoning_effort: low` on Grok 4 reduces hidden
-   chain-of-thought tokens while retaining output quality for summarisation
-   tasks.
-4. **Concise output instruction** — the system prompt asks for bullet-point
+3. **Concise output instruction** — the system prompt asks for bullet-point
    output capped at 800 words.
 
 ---

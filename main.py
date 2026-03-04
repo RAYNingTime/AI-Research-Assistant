@@ -58,6 +58,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# Test mode: hardcoded sources (set to True to skip live scraping)
+# ---------------------------------------------------------------------------
+USE_TEST_DATA = False
+
+TEST_SCRAPED_DATA = {
+    "https://arxiv.org/list/cs.AI/new": "arXiv cs.AI: Recent submissions include papers on federated learning privacy, reasoning benchmarks for LLMs, and novel multi-agent memory systems.",
+    "https://huggingface.co/papers": "Hugging Face Papers: Trending work includes Moonshine ASR model with rotary embeddings and efficient encoder-decoder architectures.",
+    "https://openai.com/research/": "OpenAI Research: Latest publications on reinforcement learning from human feedback and constitutional AI methods.",
+}
+
 
 # ---------------------------------------------------------------------------
 # Source loading
@@ -113,21 +124,25 @@ def run_pipeline() -> None:
     run_start = datetime.now(tz=timezone.utc)
     logger.info("Pipeline started at %s.", run_start.isoformat())
 
-    # ── 1. Load sources ──────────────────────────────────────────────────────
-    sources_csv = os.getenv("SOURCES_CSV", "sources.csv")
-    urls = load_sources(sources_csv)
-    if not urls:
-        logger.error("No source URLs available — aborting pipeline.")
-        return
+    # ── 1. Load sources / Use test data ──────────────────────────────────────
+    if USE_TEST_DATA:
+        logger.info("Using hardcoded test data (USE_TEST_DATA = True).")
+        scraped: dict[str, str] = TEST_SCRAPED_DATA
+    else:
+        sources_csv = os.getenv("SOURCES_CSV", "sources.csv")
+        urls = load_sources(sources_csv)
+        if not urls:
+            logger.error("No source URLs available — aborting pipeline.")
+            return
 
-    # ── 2. Scrape ────────────────────────────────────────────────────────────
-    logger.info("Scraping %d sources…", len(urls))
-    scraped: dict[str, str] = scraper.scrape_all(urls)
-    if not scraped:
-        logger.error("All scraping attempts failed — aborting pipeline.")
-        return
+        # ── 2. Scrape ────────────────────────────────────────────────────────
+        logger.info("Scraping %d sources…", len(urls))
+        scraped: dict[str, str] = scraper.scrape_all(urls)
+        if not scraped:
+            logger.error("All scraping attempts failed — aborting pipeline.")
+            return
 
-    logger.info("Successfully scraped %d / %d sources.", len(scraped), len(urls))
+        logger.info("Successfully scraped %d / %d sources.", len(scraped), len(urls))
 
     # ── 3. Memory context ────────────────────────────────────────────────────
     memory_path = os.getenv("MEMORY_FILE", "memory.json")

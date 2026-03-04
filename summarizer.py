@@ -6,9 +6,7 @@ xAI Grok API (OpenAI-compatible interface).
 
 Model
 -----
-``grok-4-0709`` – Grok 4 with fast reasoning enabled via the ``reasoning_effort``
-parameter.  Fast reasoning mode keeps latency low while still producing
-well-structured analytical summaries.
+``grok-4-fast-reasoning`` via xAI's OpenAI-compatible chat completions API.
 
 Token-saving strategy
 ---------------------
@@ -67,7 +65,7 @@ def _get_client() -> OpenAI:
         )
     return OpenAI(api_key=api_key, base_url="https://api.x.ai/v1")
 
-_MODEL = "grok-4-0709"
+_MODEL = "grok-4-fast-reasoning"
 
 
 # ---------------------------------------------------------------------------
@@ -154,9 +152,6 @@ def generate_summary(
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
-            # Fast reasoning: the model reasons internally but responds quickly.
-            # Adjust to "high" for deeper analysis at the cost of latency.
-            extra_body={"reasoning_effort": "low"},
         )
         summary = response.choices[0].message.content
         logger.info("Summary generated (%d chars).", len(summary or ""))
