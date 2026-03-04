@@ -1,0 +1,21 @@
+name,url,category,notes
+arXiv AI (cs.AI),https://arxiv.org/list/cs.AI/recent,Papers,Daily preprints in AI
+arXiv Machine Learning (cs.LG),https://arxiv.org/list/cs.LG/recent,Papers,Daily preprints in ML
+Papers With Code (Latest),https://paperswithcode.com/latest,Papers,State-of-the-art papers with code
+Hugging Face Papers,https://huggingface.co/papers,Papers,Community-curated AI papers
+OpenAI Research,https://openai.com/research,Blog,OpenAI official research publications
+Google DeepMind Research,https://deepmind.google/research/publications/,Blog,DeepMind research publications
+Google AI Blog,https://ai.googleblog.com,Blog,Google AI team blog
+Meta AI Research,https://ai.meta.com/research/publications/,Blog,Meta AI research publications
+Microsoft Research AI,https://www.microsoft.com/en-us/research/research-area/artificial-intelligence/,Blog,Microsoft AI research
+Anthropic Research,https://www.anthropic.com/research,Blog,Anthropic safety and capabilities research
+MIT News AI,https://news.mit.edu/topic/artificial-intelligence2,News,MIT AI research news
+Stanford HAI News,https://hai.stanford.edu/news,News,Stanford Human-Centered AI news
+VentureBeat AI,https://venturebeat.com/ai/,News,AI industry and research news
+TechCrunch AI,https://techcrunch.com/category/artificial-intelligence/,News,AI startup and research coverage
+The Gradient,https://thegradient.pub,Blog,In-depth AI research analysis
+Distill.pub,https://distill.pub,Blog,Interactive ML research articles
+Towards Data Science,https://towardsdatascience.com,Blog,Applied ML and AI articles
+AI Alignment Forum,https://www.alignmentforum.org,Forum,AI safety and alignment research
+Less Wrong AI,https://www.lesswrong.com/tag/ai,Forum,AI rationality and safety discussions
+IEEE Spectrum AI,https://spectrum.ieee.org/topic/artificial-intelligence/,News,IEEE AI research and industry coverage
