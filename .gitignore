@@ -20,6 +20,11 @@ env/
 # Memory store (runtime data – not part of source)
 memory.json
 
+# Generated digests / reports
+reports_json/
+reports_md/
+reports_pdf/
+
 # Editor / OS
 .DS_Store
 .idea/

@@ -1,0 +1,10 @@
+{
+  "date": "2026-03-05",
+  "sources": [
+    "https://arxiv.org/list/cs.AI/new",
+    "https://huggingface.co/papers",
+    "https://openreview.net/group?id=ICLR.cc/2026/Conference"
+  ],
+  "summary": "**arXiv cs.AI** — Recent submissions\\n- [Efficient MoE Inference for Long Context](https://arxiv.org/abs/2503.01234) — Faster decoding via expert caching + quantization-aware routing.\\n- [Safety Benchmarks for Agentic LLMs](https://arxiv.org/abs/2503.04567) — A jailbreak + tool-use eval suite with reproducible scoring.\\n- [A Small Multimodal Dataset for Robot Grasping](https://arxiv.org/abs/2503.07890) — New dataset + baseline for grasp success prediction.\\n\\n**Hugging Face Papers** — Trending\\n- [Efficient MoE Inference for Long Context](https://huggingface.co/papers/2503.01234) — Trending today on HF Papers.\\n\\n**OpenReview ICLR 2026** — No new significant submissions in the last 24 hours."
+}
+

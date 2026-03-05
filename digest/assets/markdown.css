@@ -1,0 +1,62 @@
+/* Minimal, GitHub-ish Markdown styling for PDF export (WeasyPrint). */
+
+@page {
+  margin: 18mm;
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #111;
+}
+
+a {
+  color: #0969da;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 20pt;
+  margin: 0 0 10pt 0;
+}
+
+h2 {
+  font-size: 14pt;
+  margin: 14pt 0 6pt 0;
+  padding-bottom: 4pt;
+  border-bottom: 1px solid #ddd;
+}
+
+ul, ol {
+  margin: 6pt 0 6pt 18pt;
+}
+
+li {
+  margin: 2pt 0;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 10pt;
+  background: #f6f8fa;
+  padding: 1pt 3pt;
+  border-radius: 3pt;
+}
+
+pre code {
+  display: block;
+  padding: 8pt;
+  white-space: pre-wrap;
+}
+
+blockquote {
+  border-left: 3pt solid #ddd;
+  padding-left: 10pt;
+  color: #444;
+}
+

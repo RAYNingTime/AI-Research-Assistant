@@ -28,6 +28,8 @@ AI-Research-Assistant/
 ├── scraper.py       # Web fetching & text extraction (httpx + trafilatura)
 ├── summarizer.py    # Grok 4 API integration & prompt construction
 ├── memory.py        # Persistent JSON memory block for all past summaries
+├── digest/          # Build/render/export structured daily digests (JSON/MD/PDF)
+├── examples/        # Mock inputs + sample output
 ├── sources.csv      # List of AI research websites to scrape
 ├── .env.example     # Template for required environment variables
 ├── requirements.txt # Python dependencies
@@ -40,14 +42,39 @@ AI-Research-Assistant/
 
 ### 1 — Clone & install dependencies
 
+**Windows PowerShell**
+
+```powershell
+git clone https://github.com/RAYNingTime/AI-Research-Assistant.git
+cd .\AI-Research-Assistant
+python -m venv .venv
+
+# If activation is blocked:
+# Set-ExecutionPolicy -Scope Process Bypass
+.\.venv\Scripts\Activate.ps1
+
+python -m pip install -r .\requirements.txt
+```
+
+**macOS/Linux**
+
 ```bash
 git clone https://github.com/RAYNingTime/AI-Research-Assistant.git
 cd AI-Research-Assistant
-python -m venv .venv && source .venv/bin/activate   # optional but recommended
-pip install -r requirements.txt
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 ```
 
 ### 2 — Configure environment variables
+
+**Windows PowerShell**
+
+```powershell
+Copy-Item .\.env.example .\.env
+```
+
+**macOS/Linux**
 
 ```bash
 cp .env.example .env
@@ -132,6 +159,61 @@ human reference.
 The last *N* entries (configurable via `MEMORY_CONTEXT_COUNT` in
 `summarizer.py`, default 5) are automatically injected into each new prompt so
 the model avoids repeating previously covered research.
+
+---
+
+## Structured Daily Digests (JSON → Markdown → PDF)
+
+This repo includes a `digest/` module that produces **human-readable**, **deduplicated** daily reports.
+It reads from `memory.json` (or a single raw `{date,sources,summary}` JSON file) and writes:
+
+- JSON output: `./reports_json/YYYY-MM-DD.json`
+- Markdown output: `./reports_md/YYYY-MM-DD.md`
+- PDF output: `./reports_pdf/YYYY-MM-DD.pdf`
+
+### Commands (Windows PowerShell)
+
+Run these from the repo root:
+
+```powershell
+# (Optional) activate the venv first, then just use `python`
+.\.venv\Scripts\Activate.ps1
+
+# 1) Run the main pipeline (updates memory.json)
+python .\main.py
+
+# 2) Build digest JSON for a specific date (YYYY-MM-DD)
+python -m digest build --date 2026-03-05 --input .\memory.json --out .\reports_json --force
+
+# 3) Render Markdown from the digest JSON
+python -m digest render --date 2026-03-05 --in .\reports_json --out .\reports_md
+
+# 4) Export PDF from the Markdown
+python -m digest pdf --date 2026-03-05 --md-dir .\reports_md --out .\reports_pdf
+
+# Or do steps 2–4 in one go:
+python -m digest all --date 2026-03-05 --input .\memory.json --force
+```
+
+If you don’t have a PDF backend installed yet, run only build+render:
+
+```powershell
+python -m digest build  --date 2026-03-05 --input .\examples\mock_raw.json --out .\reports_json --force
+python -m digest render --date 2026-03-05 --in .\reports_json --out .\reports_md
+```
+
+### PDF dependencies
+
+Two backends are supported (auto-selected):
+
+1) **Pandoc (preferred)**: install `pandoc` and a TeX engine (MiKTeX / TeX Live).  
+2) **Python fallback**: install `markdown2` (or `markdown`) plus `weasyprint`.
+   - On Windows, WeasyPrint also requires external GTK/Pango libraries; if those aren’t installed, PDF export fails with missing `libgobject-2.0-0`.
+   - Install the Python packages with: `python -m pip install markdown2 weasyprint`
+
+Notes:
+- If you see PowerShell errors like “`.venv\\Scripts\\python.exe` is not recognized”, use `.\.venv\Scripts\python.exe` (or activate the venv first).
+- If `memory.json` contains multiple entries for the same `date` (from multiple runs), `digest build` selects the most informative one.
 
 ---
 
